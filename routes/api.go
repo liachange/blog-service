@@ -1,6 +1,7 @@
 package routes
 
 import (
+	auth "blog-service/app/http/controller/api/v1/auth"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -15,5 +16,11 @@ func RegisterAPIRoutes(r *gin.Engine) {
 				"data": "ok",
 			})
 		})
+		authGroup := v1.Group("/auth")
+		{
+			suc := new(auth.SignupController)
+			// 判断手机是否已注册
+			authGroup.GET("/signup/phone/exist", suc.IsPhoneExist)
+		}
 	}
 }
