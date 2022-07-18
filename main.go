@@ -20,6 +20,8 @@ func main() {
 	flag.StringVar(&env, "env", "", "加载 .env 文件，如 --env=testing 加载的是 .env.testing 文件")
 	flag.Parse()
 	config.InitConfig(env)
+	// 初始化 Logger
+	bootstrap.SetupLogger()
 	//new 一个Gin Engine 实例
 	r := gin.New()
 	// 初始化 DB
