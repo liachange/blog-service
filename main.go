@@ -29,6 +29,8 @@ func main() {
 	r := gin.New()
 	// 初始化 DB
 	bootstrap.SetupDB()
+	// 初始化 Redis
+	bootstrap.SetupRedis()
 	// 初始化路由绑定
 	bootstrap.SetupRoute(r)
 	//运行服务，默认为 8080，我们指定端口为 8000
