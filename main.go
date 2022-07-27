@@ -33,7 +33,7 @@ func main() {
 	bootstrap.SetupRedis()
 	// 初始化路由绑定
 	bootstrap.SetupRoute(r)
-	//运行服务，默认为 8080，我们指定端口为 8000
+	//运行服务
 	err := r.Run(":" + config.Get("app.port"))
 	if err != nil {
 		// 错误处理，端口被占用了或者其他错误
