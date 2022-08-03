@@ -19,10 +19,10 @@ func (s *Aliyun) Send(phone string, message Message, config map[string]string) b
 	}
 	logger.DebugJSON("短信[阿里云]", "配置信息", config)
 	result, err := smsClient.Execute(
-		config[""],
-		config[""],
+		config["access_key_id"],
+		config["access_key_secret"],
 		phone,
-		config[""],
+		config["sign_name"],
 		message.Template,
 		string(templateParam),
 	)
