@@ -70,6 +70,15 @@ func (vc *VerifyCode) SendEmail(email string) error {
 	return nil
 }
 
+// CheckAnswer 检查用户提交的验证码是否正确，key 可以是手机号或者 Email
+func (vc *VerifyCode) CheckAnswer(key, answer string) bool {
+	logger.DebugJSON("验证码", "检查验证码", map[string]string{key: answer})
+	if !app.IsProduction() && strings.HasPrefix(key, config.GetString("verifycode.debug_email_suffix")) || strings.HasPrefix(key, config.GetString("verifycode.debug_phone_prefix")) {
+		return true
+	}
+	return vc.Store.Verify(key, answer, false)
+}
+
 // generateVerifyCode 生成验证码，并放置于 Redis 中
 func (vc *VerifyCode) generateVerifyCode(key string) string {
 	code := helpers.RandomNumber(config.GetInt("verifycode.code_length"))

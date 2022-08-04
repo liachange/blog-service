@@ -1,6 +1,9 @@
 package user
 
-import "blog-service/app/models"
+import (
+	"blog-service/app/models"
+	"blog-service/pkg/database"
+)
 
 // User 用户模型
 type User struct {
@@ -10,4 +13,9 @@ type User struct {
 	Phone    string `json:"phone"`
 	Password string `json:"password"`
 	models.CommonTimestampsField
+}
+
+// Create 创建用户，通过 User.ID 来判断是否创建成功
+func (userModel *User) Create() {
+	database.DB.Create(&userModel)
 }
