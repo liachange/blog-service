@@ -63,7 +63,7 @@ type SignupUsingPhoneRequest struct {
 func SignupUsingPhone(data interface{}, c *gin.Context) map[string][]string {
 	rules := govalidator.MapData{
 		"phone":            []string{"required", "digits:11", "not_exists:users,phone"},
-		"name":             []string{"required", "between:3,20", "not_exists:users,phone"},
+		"name":             []string{"required", "between:3,20", "not_exists:users,name"},
 		"password":         []string{"required", "min:6"},
 		"password_confirm": []string{"required"},
 	}
@@ -88,5 +88,49 @@ func SignupUsingPhone(data interface{}, c *gin.Context) map[string][]string {
 	_data := data.(*SignupUsingPhoneRequest)
 	errs = validators.ValidatePasswordConfirm(_data.Password, _data.PasswordConfirm, errs)
 	errs = validators.ValidateVerifyCode(_data.Phone, _data.VerifyCode, errs)
+	return errs
+}
+
+type SignupUsingEmailRequest struct {
+	Email           string `json:"email,omitempty" valid:"email"`
+	VerifyCode      string `json:"verify_code,omitempty" valid:"verify_code"`
+	Name            string `json:"name,omitempty" valid:"name"`
+	Password        string `json:"password,omitempty" valid:"password"`
+	PasswordConfirm string `json:"password_confirm,omitempty" valid:"password_confirm"`
+}
+
+func SignupUsingEmail(data interface{}, c *gin.Context) map[string][]string {
+	rules := govalidator.MapData{
+		"email":            []string{"required", "email", "not_exists:users,email"},
+		"verify_code":      []string{"required"},
+		"name":             []string{"required", "min:3", "max:30", "not_exists:users,name"},
+		"password":         []string{"required", "min:6"},
+		"password_confirm": []string{"required"},
+	}
+	message := govalidator.MapData{
+		"email": []string{
+			"required:邮箱为必填项，参数名称为email",
+			"email:邮箱格式不正确",
+		},
+		"verify_code": []string{
+			"required:验证码为必填项，参数名称为 verify_code",
+		},
+		"name": []string{
+			"required:名称为必填项，参数名称为name",
+			"min:名称长度需大于 3",
+			"max:名称长度需小于30",
+		},
+		"password": []string{
+			"required:密码为必填项，参数名称为 password",
+			"min:密码长度需大于6位",
+		},
+		"password_confirm": []string{
+			"required:确认密码不能为空",
+		},
+	}
+	errs := validate(data, rules, message)
+	_data := data.(*SignupUsingEmailRequest)
+	errs = validators.ValidatePasswordConfirm(_data.Password, _data.PasswordConfirm, errs)
+	errs = validators.ValidateVerifyCode(_data.Email, _data.VerifyCode, errs)
 	return errs
 }
