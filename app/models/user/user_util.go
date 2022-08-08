@@ -1,6 +1,8 @@
 package user
 
-import "blog-service/pkg/database"
+import (
+	"blog-service/pkg/database"
+)
 
 // IsEmailExist 判断 Email 已被注册
 func IsEmailExist(email string) bool {
@@ -25,5 +27,11 @@ func GetByPhone(phone string) (userModel User) {
 // GetByMulti 通过 手机号/Email/用户名 来获取用户
 func GetByMulti(loginID string) (userModel User) {
 	database.DB.Where("phone=?", loginID).Or("email=?", loginID).Or("name=?", loginID).First(&userModel)
+	return
+}
+
+// Get 通过 ID 获取用户
+func Get(idstr string) (userModel User) {
+	database.DB.Where("id", idstr).First(&userModel)
 	return
 }
