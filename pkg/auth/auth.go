@@ -6,8 +6,8 @@ import (
 )
 
 // Attempt 尝试登录
-func Attempt(email, password string) (user.User, error) {
-	userModel := user.GetByMulti(email)
+func Attempt(loginID, password string) (user.User, error) {
+	userModel := user.GetByMulti(loginID)
 	if userModel.ID == 0 {
 		return user.User{}, errors.New("账户不存在")
 	}
