@@ -1,7 +1,7 @@
 package auth
 
 import (
-	v1 "blog-service/app/http/controller/api/v1"
+	v1 "blog-service/app/http/controllers/api/v1"
 	"blog-service/app/models/user"
 	"blog-service/app/requests"
 	"blog-service/pkg/response"

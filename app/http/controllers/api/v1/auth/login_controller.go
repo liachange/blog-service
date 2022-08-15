@@ -1,6 +1,7 @@
 package auth
 
 import (
+	v1 "blog-service/app/http/controllers/api/v1"
 	"blog-service/app/requests"
 	"blog-service/pkg/auth"
 	"blog-service/pkg/jwt"
@@ -9,7 +10,9 @@ import (
 )
 
 // LoginController 用户控制器
-type LoginController struct{}
+type LoginController struct {
+	v1.BaseAPIController
+}
 
 func (lc *LoginController) LoginByPhone(c *gin.Context) {
 	// 1. 验证表单
