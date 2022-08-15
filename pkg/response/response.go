@@ -94,7 +94,7 @@ func Error(c *gin.Context, err error, msg ...string) {
 func ValidationError(c *gin.Context, errors map[string][]string) {
 	c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
 		"message": "请求验证不通过，具体请查看 errors",
-		"error":   errors,
+		"errors":  errors,
 	})
 }
 

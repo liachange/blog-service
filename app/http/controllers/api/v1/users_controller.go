@@ -2,6 +2,7 @@ package v1
 
 import (
 	"blog-service/app/models/user"
+	"blog-service/app/requests"
 	"blog-service/pkg/auth"
 	"blog-service/pkg/response"
 	"github.com/gin-gonic/gin"
@@ -18,6 +19,10 @@ func (ctrl *UsersController) CurrentUser(c *gin.Context) {
 
 //Index 所有用户
 func (ctrl *UsersController) Index(c *gin.Context) {
+	request := requests.PaginationRequest{}
+	if ok := requests.Validate(c, &request, requests.Pagination); !ok {
+		return
+	}
 	data, pager := user.Paginate(c, 10)
 	response.JSON(c, gin.H{
 		"data":  data,
