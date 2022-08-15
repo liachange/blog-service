@@ -14,24 +14,24 @@ import (
 
 // Paging 分页数据
 type Paging struct {
-	CurrentPage int    // 当前页
-	PerPage     int    // 每页条数
-	TotalPage   int    // 总页数
-	TotalCount  int64  // 总条数
-	NextPageURL string // 下一页的链接
-	PrevPageURL string // 上一页的链接
+	CurrentPage int    `json:"current_page"`  // 当前页
+	PerPage     int    `json:"per_page"`      // 每页条数
+	TotalPage   int    `json:"total_page"`    // 总页数
+	TotalCount  int64  `json:"total_count"`   // 总条数
+	NextPageURL string `json:"next_page_url"` // 下一页的链接
+	PrevPageURL string `json:"prev_page_url"` // 上一页的链接
 }
 
 // Paginator 分页操作类
 type Paginator struct {
-	BaseURL    string // 用以拼接 URL
-	PerPage    int    // 每页条数
-	Page       int    // 当前页
-	Offset     int    // 数据库读取数据时 Offset 的值
-	TotalCount int64  // 总条数
-	TotalPage  int    // 总页数 = TotalCount/PerPage
-	Sort       string // 排序规则
-	Order      string // 排序顺序
+	BaseURL    string `json:"base_url"`    // 用以拼接 URL
+	PerPage    int    `json:"per_page"`    // 每页条数
+	Page       int    `json:"page"`        // 当前页
+	Offset     int    `json:"offset"`      // 数据库读取数据时 Offset 的值
+	TotalCount int64  `json:"total_count"` // 总条数
+	TotalPage  int    `json:"total_page"`  // 总页数 = TotalCount/PerPage
+	Sort       string `json:"sort"`        // 排序规则
+	Order      string `json:"order"`       // 排序顺序
 
 	query *gorm.DB     // db query 句柄
 	ctx   *gin.Context // gin context，方便调用
