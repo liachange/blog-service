@@ -50,6 +50,22 @@ func init() {
 		// 验证通过
 		return nil
 	})
+	govalidator.AddCustomRule("exists", func(field string, rule string, message string, value interface{}) error {
+		rng := strings.Split(strings.TrimPrefix(rule, "exists:"), ",")
+		tableName := rng[0]
+		dbFiled := rng[1]
+		requestValue := value.(string)
+		query := database.DB.Table(tableName).Where(dbFiled+"=?", requestValue)
+		var count int64
+		query.Count(&count)
+		if count == 0 {
+			if message != "" {
+				return errors.New(message)
+			}
+			return fmt.Errorf("%v 已被占用", requestValue)
+		}
+		return nil
+	})
 	govalidator.AddCustomRule("min_cn", func(field string, rule string, message string, value interface{}) error {
 		valLength := utf8.RuneCountInString(value.(string))
 		l, _ := strconv.Atoi(strings.TrimPrefix(rule, "min_cn:"))

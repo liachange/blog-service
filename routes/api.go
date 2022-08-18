@@ -61,6 +61,5 @@ func RegisterAPIRoutes(r *gin.Engine) {
 		{
 			cgcGroup.POST("", middlewares.GuestJWT(), cgc.Store)
 		}
-
 	}
 }

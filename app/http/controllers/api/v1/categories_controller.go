@@ -21,8 +21,7 @@ func (ctrl *CategoriesController) Store(c *gin.Context) {
 		Description: request.Description,
 		Sort:        request.Sort,
 		State:       request.State,
-		ParentId:    "0",
-		Level:       "1",
+		ParentID:    request.ParentID,
 		ImageUrl:    request.ImageUrl,
 	}
 	categoryModel.Create()

@@ -13,9 +13,9 @@ type Category struct {
 	State       string    `json:"state,omitempty"`
 	ImageUrl    string    `json:"image_url,omitempty"`
 	Sort        string    `json:"sort,omitempty"`
-	ParentId    string    `json:"parent_id,omitempty"`
-	Level       string    `json:"level,omitempty"`
-	DeletedAt   time.Time `gorm:"default:''"`
+	ParentID    string    `json:"parent_id,omitempty" gorm:"default:0"`
+	Level       string    `json:"level,omitempty" gorm:"default:1"`
+	DeletedAt   time.Time `json:"-" gorm:"default:''"`
 	models.CommonTimestampsField
 }
 
